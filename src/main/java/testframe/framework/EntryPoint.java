@@ -2,6 +2,7 @@ package testframe.framework;
 
 import testframe.framework.common.properties.PropFileReader;
 import testframe.framework.recvier.HttpReciver;
+import testframe.framework.recvier.HttpsReciver;
 import testframe.framework.taskmanager.TaskManagerEntry;
 
 public class EntryPoint {
@@ -16,7 +17,9 @@ public class EntryPoint {
 			Thread.sleep(100);
 			
 			//HttpReciver Start
-			HttpReciver reciver = new HttpReciver();
+			//HttpReciver reciver = new HttpReciver();
+			//reciver.httpReciverStart();
+			HttpsReciver reciver = new HttpsReciver();
 			reciver.httpReciverStart();
 			
 		} catch (Exception e) {

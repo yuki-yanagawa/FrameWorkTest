@@ -3,3 +3,4 @@ GET /main.css testframe.gui.controller.CssFileController.main
 GET /main.js  testframe.gui.controller.JavaScriptFileController.main
 GET /jquery-3.7.1.min.js testframe.gui.controller.JavaScriptFileController.jqueryMain
 POST /testJson testframe.gui.controller.TestAPI.testapi
+GET  /admin    testframe.gui.controller.AdminFileController.main
