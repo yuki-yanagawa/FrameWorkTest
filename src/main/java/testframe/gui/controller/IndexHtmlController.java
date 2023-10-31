@@ -1,10 +1,12 @@
 package testframe.gui.controller;
 
+
 import testframe.framework.common.http.HttpResFrame;
 import testframe.framework.controller.ControllerFrame;
+import testframe.gui.model.FileCreaterModel;
 
 public class IndexHtmlController extends ControllerFrame {
-	public HttpResFrame main() {
-		return html("frontparts/html/index.html");
+	public <T> HttpResFrame main(T args) {
+		return html("frontparts/html/index.html", (FileCreaterModel)args);
 	}
 }

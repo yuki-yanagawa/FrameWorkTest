@@ -1,6 +1,10 @@
 package testframe.framework;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+
 import testframe.framework.common.properties.PropFileReader;
+import testframe.framework.performance.PerformanceChecker;
 import testframe.framework.recvier.HttpReciver;
 import testframe.framework.recvier.HttpsReciver;
 import testframe.framework.taskmanager.TaskManagerEntry;
@@ -8,6 +12,14 @@ import testframe.framework.taskmanager.TaskManagerEntry;
 public class EntryPoint {
 	public static void main(String[] args) {
 		try {
+			//Peformance Checker
+			PerformanceChecker perfomanceCheck = PerformanceChecker.getInstance();
+			RuntimeMXBean rm = ManagementFactory.getRuntimeMXBean();
+			long processId = Long.parseLong(rm.getName().split("@")[0]);
+			long startTime = rm.getStartTime();
+			perfomanceCheck.setProcessId(processId);
+			perfomanceCheck.setStartTime(startTime);
+			
 			//Properties File read
 			PropFileReader.refresh();
 			Thread.sleep(100);

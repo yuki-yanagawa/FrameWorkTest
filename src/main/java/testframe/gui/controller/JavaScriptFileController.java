@@ -2,13 +2,12 @@ package testframe.gui.controller;
 
 import testframe.framework.common.http.HttpResFrame;
 import testframe.framework.controller.ControllerFrame;
+import testframe.gui.model.FileCreaterModel;
 
-public class JavaScriptFileController extends ControllerFrame {
-	public HttpResFrame main() {
-		return js("frontparts/js/main.js");
-	}
-
-	public HttpResFrame jqueryMain() {
-		return js("frontparts/js/jquery-3.7.1.min.js");
+public class JavaScriptFileController extends ControllerFrame {	
+	public <T> HttpResFrame jsFile(T args) {
+		FileCreaterModel fileCreaterModel = (FileCreaterModel)args;
+		String filename = fileCreaterModel.getRequestData();
+		return js("frontparts" + filename);
 	}
 }
