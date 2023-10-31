@@ -11,8 +11,11 @@ import testframe.framework.common.log.Logger;
 import testframe.framework.common.properties.PropFileReader;
 import testframe.framework.controllercache.ControllerCache;
 import testframe.framework.recvier.handle.exception.HttpCreateResponseException;
+import testframe.framework.router.RouterActionClassPathCreater;
 import testframe.framework.router.RouterContainer;
 import testframe.framework.router.RouterFileReader;
+import testframe.gui.model.FileCreaterModel;
+import testframe.gui.model.factory.FileCreaterModelFactory;
 
 public class HttpHandleUtil {
 	private static int recvBufSize = 2048;
@@ -37,9 +40,7 @@ public class HttpHandleUtil {
 		Map<String,String> requestParameterMap = new HashMap<>();
 		requestParameterMapConverter(httpRequestLine,requestParameterMap);
 		
-		Map<String,Object> routesrFileMapAllList = RouterFileReader.getInstance().getRouterFileMap();
-		Map<String,String> routerFileMap = (Map<String,String>)routesrFileMapAllList.get(requestMethod);
-		String actionClassPath = routerFileMap.get(requestData);
+		String actionClassPath = RouterActionClassPathCreater.createActionClassPath(requestMethod, requestData);
 		if(actionClassPath == null || actionClassPath.trim().equals("")) {
 		Logger.warn(Thread.currentThread().getName(), "this web api is not define : " + requestData);
 			return HttpResponseHeader.createResponseHeaderBad();
@@ -85,10 +86,11 @@ public class HttpHandleUtil {
 			
 		} else if(requestMethod.toUpperCase().equals("GET")) {
 			try {
-				HttpResFrame httpResFrame = actionCalssCallHandler(actionClassPath);
-				if(!ControllerCache.getInstance().existData(actionClassPath)) {
-					Logger.info(Thread.currentThread().getName(), actionClassPath + " join Cashe");
-					ControllerCache.getInstance().addCacheData(actionClassPath, httpResFrame);
+				FileCreaterModel fileCreaterModel = FileCreaterModelFactory.createFileCreaterModel(requestData);
+				HttpResFrame httpResFrame = actionCalssCallHandler(actionClassPath, fileCreaterModel);
+				if(!ControllerCache.getInstance().existData(requestData)) {
+					Logger.info(Thread.currentThread().getName(), requestData + " join Cashe");
+					ControllerCache.getInstance().addCacheData(requestData, httpResFrame);
 				}
 				return httpResFrame.createResponse();
 			} catch(Exception e) {

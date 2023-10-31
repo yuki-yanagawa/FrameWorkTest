@@ -21,18 +21,18 @@ public class ControllerCache {
 		return controllerCache_;
 	}
 	
-	public synchronized void addCacheData(String path, HttpResFrame data) {
+	public synchronized void addCacheData(String requestData, HttpResFrame data) {
 		if(cacheData.size() >= CASHESIZE) {
 			cleanCache();
 		}
-		cacheData.put(path, data);
-		accessMap.put(path, 0);
+		cacheData.put(requestData, data);
+		accessMap.put(requestData, 0);
 	}
 	
-	public HttpResFrame getData(String path) {
-		int accesMapVal = accessMap.get(path) + 1;
-		accessMap.put(path, accesMapVal);
-		return cacheData.get(path);
+	public HttpResFrame getData(String requestData) {
+		int accesMapVal = accessMap.get(requestData) + 1;
+		accessMap.put(requestData, accesMapVal);
+		return cacheData.get(requestData);
 	}
 
 	private void cleanCache() {

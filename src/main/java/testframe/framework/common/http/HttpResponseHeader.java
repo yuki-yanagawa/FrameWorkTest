@@ -50,7 +50,7 @@ public class HttpResponseHeader {
 	public static String createResponseHeaderSuccess(ContentType type, int fileSize) {
 		String retStr = "";
 		retStr = "HTTP/1.1 200 OK\r\n";
-		retStr = retStr + "content-length : " + String.valueOf(fileSize) + "\r\n";
+		retStr = retStr + "content-length : " + String.valueOf(fileSize + "\r\n".length()) + "\r\n";
 		switch(type) {
 		case HTML:
 			retStr = retStr + "content-type: text/html; charset='utf-8'\r\n";
